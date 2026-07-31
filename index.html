@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Garden Venture 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="day-theme">
+
+  <div id="game-container">
+
+    <div id="splash-screen" class="splash-screen">
+      <div class="user-id-badge splash-badge">ID: 54596368</div>
+
+      <div class="splash-title-block">
+        <div class="logo-text-stack">
+          <div class="classic-title-garden">GARDEN</div>
+          <div class="classic-title-venture">
+            VENTURE <span class="spiced-two">2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="splash-bottom-bar">
+        <div class="splash-progress-track">
+          <div id="splash-progress-fill" class="splash-progress-fill"></div>
+        </div>
+        <div id="splash-prompt" class="splash-prompt">🎷 TAP TO START & PLAY LOFI JAZZ 🎵</div>
+      </div>
+    </div>
+    
+    <header class="hud-panel">
+      <div class="user-id-badge">ID: 54596368</div>
+      
+      <div class="currency-display">
+        <span class="currency-icon">💰</span>
+        <span id="cash-amount">$25</span>
+      </div>
+
+      <div class="action-buttons-row">
+        <button id="shovel-btn" class="btn btn-shovel">
+          ⛏️ Shovel
+        </button>
+        <button id="sell-btn" class="btn btn-sell">
+          🤠 Sell Options
+        </button>
+        <button id="shop-btn" class="btn btn-shop">
+          🛒 Shop
+        </button>
+      </div>
+
+      <button id="settings-btn" class="btn btn-settings">
+        ⚙️ Settings
+      </button>
+    </header>
+
+    <section class="status-banner" id="status-banner" title="Click for Weather & Cycle Info!">
+      <div class="cycle-status">
+        <div class="sky-arc-container">
+          <span id="cycle-icon" class="celestial-icon">☀️</span>
+        </div>
+        <div class="cycle-info">
+          <span id="cycle-label">Day Time (5:00)</span>
+          <span id="cycle-timer">5:00</span>
+        </div>
+      </div>
+    </section>
+
+    <nav class="field-nav">
+      <button id="prev-field-btn" class="nav-btn">◀ Prev</button>
+      <div class="field-title" id="field-title">Field 1 / 5</div>
+      <button id="next-field-btn" class="nav-btn">Next ▶</button>
+    </nav>
+
+    <main class="farm-yard-container">
+      <div id="fireflies-layer" class="fireflies-layer"></div>
+
+      <div class="swaying-grass-layer">
+        <div class="grass-patch p1"><div class="blade b1"></div><div class="blade b2"></div><div class="blade b3"></div></div>
+        <div class="grass-patch p2"><div class="blade b2"></div><div class="blade b1"></div><div class="blade b3"></div></div>
+        <div class="grass-patch p3"><div class="blade b3"></div><div class="blade b2"></div><div class="blade b1"></div></div>
+        <div class="grass-patch p4"><div class="blade b1"></div><div class="blade b3"></div><div class="blade b2"></div></div>
+        
+        <div class="grass-patch p5"><div class="blade b2"></div><div class="blade b1"></div><div class="blade b3"></div></div>
+        <div class="grass-patch p6"><div class="blade b1"></div><div class="blade b3"></div><div class="blade b2"></div></div>
+        <div class="grass-patch p7"><div class="blade b3"></div><div class="blade b2"></div><div class="blade b1"></div></div>
+
+        <div class="grass-patch p8"><div class="blade b1"></div><div class="blade b3"></div><div class="blade b2"></div></div>
+        <div class="grass-patch p9"><div class="blade b3"></div><div class="blade b1"></div><div class="blade b2"></div></div>
+        <div class="grass-patch p10"><div class="blade b2"></div><div class="blade b3"></div><div class="blade b1"></div></div>
+
+        <div class="grass-patch p11"><div class="blade b1"></div><div class="blade b2"></div><div class="blade b3"></div></div>
+        <div class="grass-patch p12"><div class="blade b3"></div><div class="blade b1"></div><div class="blade b2"></div></div>
+        <div class="grass-patch p13"><div class="blade b2"></div><div class="blade b3"></div><div class="blade b1"></div></div>
+        <div class="grass-patch p14"><div class="blade b1"></div><div class="blade b2"></div><div class="blade b3"></div></div>
+
+        <div class="flower f1"></div>
+        <div class="flower f2"></div>
+        <div class="flower f3"></div>
+        <div class="flower f4"></div>
+      </div>
+
+      <div class="wooden-fence-structure" id="fence-structure">
+        <div class="fence-post corner-top-left"><div class="post-cap"></div></div>
+        <div class="fence-post corner-top-right"><div class="post-cap"></div></div>
+        <div class="fence-post corner-bottom-left"><div class="post-cap"></div></div>
+        <div class="fence-post corner-bottom-right"><div class="post-cap"></div></div>
+
+        <div class="fence-rail rail-top"></div>
+        <div class="fence-rail rail-bottom"></div>
+        <div class="fence-rail rail-left"></div>
+        <div class="fence-rail rail-right"></div>
+
+        <div class="tilled-garden-bed">
+          <div id="field-locked-overlay" class="field-locked-overlay hidden">
+            <div class="lock-icon-huge">🔒</div>
+            <h2 id="locked-field-title">Field Locked</h2>
+            <p style="font-size: 13px; opacity: 0.9;">Unlock this field bed to expand farm capacity (+9 Plots)!</p>
+            <button id="btn-unlock-field" class="btn-unlock-field">Unlock Field ($350)</button>
+          </div>
+
+          <div class="grid-container" id="plots-grid"></div>
+        </div>
+      </div>
+    </main>
+
+    <div id="particles-layer"></div>
+
+    <footer class="bottom-action-bar">
+      <div class="seed-bag-container">
+        <button id="seed-bag-btn" class="seed-bag-btn">
+          🎒 <span id="current-seed-name">Open Seed Bag</span>
+        </button>
+      </div>
+
+      <div class="bottom-right-actions">
+        <button class="icon-circle-btn gear-btn" id="shop-quick-btn" title="Quick Shop">
+          ⚙️
+        </button>
+      </div>
+    </footer>
+
+    <div id="seed-bag-drawer" class="seed-drawer hidden">
+      <div class="drawer-header">
+        <span>🎒 Seed Bag & Produce Storage</span>
+        <button id="close-drawer-btn" class="close-x">&times;</button>
+      </div>
+
+      <div class="drawer-tabs">
+        <button id="tab-seeds-btn" class="drawer-tab-btn active">🌱 Seeds to Plant</button>
+        <button id="tab-produce-btn" class="drawer-tab-btn">🧺 Harvested Crops</button>
+      </div>
+
+      <div id="seed-inventory-list" class="seed-inventory-grid"></div>
+
+      <div id="produce-inventory-list" class="produce-inventory-list hidden"></div>
+    </div>
+
+    <div id="weather-modal" class="modal hidden">
+      <div class="modal-content info-card">
+        <h2 id="weather-modal-title">☀️ Weather & Cycle Info</h2>
+        <div class="info-body-text" id="weather-modal-body"></div>
+        <button id="close-weather-btn" class="btn btn-close-modal" style="margin-top: 14px;">
+          Got It! 🌤️
+        </button>
+      </div>
+    </div>
+
+    <div id="sell-modal" class="modal hidden">
+      <div class="modal-content sell-card">
+        <h2 id="sell-modal-title">🤠 Harvest Market</h2>
+        <p class="codex-subtitle">Sell your harvested crops for cash!</p>
+        
+        <div id="sell-main-options" class="sell-options-container">
+          <button id="btn-sell-all-modal" class="btn-sell-option sell-all">
+            <span style="font-size: 28px;">🤠</span>
+            <div class="sell-opt-text">
+              <span class="opt-title">Sell All Harvested Produce</span>
+              <span id="sell-all-payout-text" class="opt-subtitle">Total Value: $0</span>
+            </div>
+          </button>
+
+          <button id="btn-sell-select-modal" class="btn-sell-option sell-select">
+            <span style="font-size: 28px;">🧺</span>
+            <div class="sell-opt-text">
+              <span class="opt-title">Choose Item From Bag to Sell</span>
+              <span class="opt-subtitle">Select crop type & quantity</span>
+            </div>
+          </button>
+
+          <button id="btn-sell-bargain-modal" class="btn-sell-option sell-bargain">
+            <span style="font-size: 28px;">🧙‍♂️</span>
+            <div class="sell-opt-text">
+              <span class="opt-title">BARGAIN</span>
+              <span class="opt-subtitle">Talk to Merchant Barnaby</span>
+            </div>
+          </button>
+        </div>
+
+        <div id="sell-item-picker" class="sell-picker-grid hidden"></div>
+
+        <div id="sell-quantity-picker" class="sell-quantity-box hidden">
+          <div id="qty-crop-header" class="qty-crop-header"></div>
+          
+          <div class="stepper-row">
+            <button id="qty-minus-btn" class="btn-stepper">-</button>
+            <span id="qty-display-num" class="qty-number">1</span>
+            <button id="qty-plus-btn" class="btn-stepper">+</button>
+          </div>
+
+          <div id="qty-payout-preview" class="qty-payout-preview">Payout: $0</div>
+
+          <button id="qty-confirm-sell-btn" class="btn-sell-all-bag" style="margin-top: 12px;">Confirm Sale 💰</button>
+          <button id="qty-back-btn" class="btn-close-modal" style="margin-top: 6px; background: #8d6e63;">Back to Item List</button>
+        </div>
+
+        <div id="bargain-npc-box" class="npc-box hidden">
+          <div class="npc-avatar">🧙‍♂️</div>
+          <div style="font-weight: 900; font-size: 16px; color: #2c1a14;">Merchant Barnaby</div>
+          
+          <div id="npc-dialogue-text" class="npc-speech-bubble">
+            "Greetings traveler! I am Merchant Barnaby. I can appraise your Seed Bag and make you a deal. My appraisal fee is $0."
+          </div>
+
+          <div class="bargain-fee-badge" id="npc-bargain-fee">Appraisal Fee: $0</div>
+
+          <div class="cash-compare-container">
+            <div class="cash-stat-box">
+              <span class="stat-label">Standard Market Value</span>
+              <span id="npc-standard-value" class="stat-value">$0</span>
+            </div>
+            <div class="cash-stat-box highlight-box">
+              <span class="stat-label">Bargain Payout</span>
+              <span id="npc-projected-cash" class="stat-value-green">$0</span>
+            </div>
+          </div>
+
+          <div id="npc-offer-tier" class="npc-offer-tier hidden">Offer: Standard</div>
+
+          <button id="btn-start-bargain" class="btn-sell-all-bag" style="background: #f57c00; box-shadow: 0 4px 0 #e65100;">Pay Fee & Start Appraisal 🤝</button>
+          
+          <button id="btn-daily-deal" class="btn-daily-deal hidden">🔥 APPLY 20X DAILY DEAL! 🔥</button>
+          
+          <button id="btn-accept-bargain" class="btn-sell-all-bag hidden" style="background: #2e7d32; box-shadow: 0 4px 0 #1b5e20;">Accept & Sell Everything 💰</button>
+          
+          <button id="btn-decline-bargain" class="btn-close-modal hidden" style="background: #ef5350;">Decline Deal 🙅‍♂️</button>
+          
+          <button id="btn-bargain-back" class="btn-close-modal" style="background: #8d6e63; margin-top: 4px;">Back to Market</button>
+        </div>
+
+        <button id="close-sell-btn" class="btn btn-close-modal" style="margin-top: 12px;">
+          Close Market
+        </button>
+      </div>
+    </div>
+
+    <div id="permanent-info-modal" class="modal hidden">
+      <div class="modal-content info-card">
+        <h2>🅿️ Permanent Plants</h2>
+        <div class="info-body-text">
+          <p><strong>Permanent Plants</strong> (like Grape Vines & Watermelon Vines) are trellis structures that stay in your garden bed indefinitely!</p>
+          <br>
+          <p>🍇 <strong>Endless Produce:</strong> They continuously grow up to 3 ripe fruits on their branches over time.</p>
+          <br>
+          <p>🌿 <strong>Field Limit:</strong> You can plant up to <strong>3 Vines per Field Bed</strong>!</p>
+          <br>
+          <p>⛏️ <strong>Removal:</strong> They produce continuous yields until you remove them with the <strong>Shovel Tool</strong>.</p>
+        </div>
+        <button id="close-perm-info-btn" class="btn btn-close-modal" style="margin-top: 14px;">
+          Got It! 🌿
+        </button>
+      </div>
+    </div>
+
+    <div id="shop-modal" class="modal hidden">
+      <div class="modal-content shop-manifest-card">
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2>SHOP</h2>
+            <div class="refill-timer-badge">
+              Refill: <span id="shop-refill-timer">3:00</span>
+            </div>
+          </div>
+          <button id="open-index-btn" class="btn btn-index">
+            📖 Index
+          </button>
+        </div>
+
+        <div id="shop-items-list" class="shop-manifest-list"></div>
+
+        <button id="close-shop-btn" class="btn btn-close-modal">
+          Close Shop
+        </button>
+      </div>
+    </div>
+
+    <div id="vine-modal" class="modal hidden">
+      <div class="modal-content vine-card">
+        <h2 id="vine-modal-title">🍇 Vine Harvest</h2>
+        <p class="codex-subtitle">Harvest individual fruits hanging on this permanent vine (Max 3 Fruits)!</p>
+        
+        <div id="vine-produce-list" class="vine-produce-grid"></div>
+
+        <button id="harvest-all-vine-btn" class="btn btn-sell" style="margin-bottom: 8px;">
+          🤠 Harvest All Vine Produce to Bag
+        </button>
+        <button id="close-vine-btn" class="btn btn-close-modal">
+          Close Vine Menu
+        </button>
+      </div>
+    </div>
+
+    <div id="index-modal" class="modal hidden">
+      <div class="modal-content codex-card">
+        <h2>📖 Plant Codex Index</h2>
+        <p class="codex-subtitle">Track your discovered garden crops!</p>
+        
+        <div id="index-items-list" class="codex-grid"></div>
+
+        <div class="index-skin-reward-banner">
+          COMPLETE THE ENTIRE INDEX AND GET "ARTICULAR PROMISE" FENCE SKIN!
+        </div>
+
+        <button id="close-index-btn" class="btn btn-close-modal" style="margin-top: 10px;">
+          Close Index
+        </button>
+      </div>
+    </div>
+
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content settings-card">
+        <h2>⚙️ Garden Settings</h2>
+        
+        <div class="stats-summary" id="stats-summary"></div>
+
+        <button id="reset-save-btn" class="btn btn-danger">
+          ⚠️ Reset Save Data
+        </button>
+
+        <button id="close-settings-btn" class="btn btn-close-modal">
+          Close Settings
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
