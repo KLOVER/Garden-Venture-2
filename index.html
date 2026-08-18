@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Garden Venture 2: Prismatic Paint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2.3">
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database-compat.js"></script>
+</head>
+<body class="day-theme">
+
+  <div id="game-container">
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <div id="splash-screen" class="splash-screen">
+      <div class="paint-splatter-bg">
+        <svg class="paint-splatter-svg splat-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="cyanPaintGrad" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#80f7ff" />
+              <stop offset="45%" stop-color="#00e5ff" />
+              <stop offset="85%" stop-color="#0097a7" />
+              <stop offset="100%" stop-color="#006064" />
+            </radialGradient>
+          </defs>
+          <path fill="url(#cyanPaintGrad)" d="M95,45 C115,20 135,15 130,42 C148,32 170,48 152,65 C175,75 178,102 154,108 C172,128 155,152 135,140 C125,162 98,170 90,148 C72,168 45,150 58,130 C32,135 22,112 42,98 C18,85 28,58 52,68 C48,42 75,32 95,45 Z" />
+          <circle cx="175" cy="40" r="5" fill="#00e5ff" />
+          <circle cx="188" cy="48" r="2.5" fill="#80f7ff" />
+          <circle cx="180" cy="120" r="4.5" fill="#00e5ff" />
+        </svg>
+
+        <svg class="paint-splatter-svg splat-top-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="magentaPaintGrad" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#ff80ab" />
+              <stop offset="45%" stop-color="#ff4081" />
+              <stop offset="85%" stop-color="#c2185b" />
+              <stop offset="100%" stop-color="#880e4f" />
+            </radialGradient>
+          </defs>
+          <path fill="url(#magentaPaintGrad)" d="M102,52 C128,25 150,38 140,62 C168,58 175,85 158,102 C178,120 162,150 138,138 C135,165 105,172 94,150 C78,168 50,158 58,135 C30,138 25,110 48,95 C22,78 40,50 65,65 C68,38 92,35 102,52 Z" />
+          <circle cx="178" cy="65" r="5.5" fill="#ff4081" />
+          <circle cx="170" cy="155" r="6" fill="#ff4081" />
+        </svg>
+
+        <svg class="paint-splatter-svg splat-bottom-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="yellowPaintGrad" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ffff8d" />
+              <stop offset="50%" stop-color="#ffd600" />
+              <stop offset="85%" stop-color="#ffab00" />
+              <stop offset="100%" stop-color="#ff6f00" />
+            </radialGradient>
+          </defs>
+          <path fill="url(#yellowPaintGrad)" d="M100,50 C125,30 145,45 138,70 C165,72 170,100 148,118 C168,142 142,165 120,152 C110,178 80,175 75,150 C52,165 35,142 50,122 C22,118 25,88 48,80 C32,58 60,40 78,58 C85,32 108,35 100,50 Z" />
+          <circle cx="178" cy="108" r="5" fill="#ffd600" />
+          <circle cx="20" cy="138" r="5.5" fill="#ffd600" />
+        </svg>
+      </div>
+
+      <div class="user-id-badge splash-badge" id="player-id-splash">ID: --------</div>
+      
+      <div class="splash-title-block">
+        <div class="logo-text-stack">
+          <div class="classic-title-garden">GARDEN</div>
+          <div class="classic-title-venture">
+            VENTURE <span class="spiced-two">2</span>
+          </div>
+          <div class="holofoil-subtitle-wrapper">
+            <h1 class="holofoil-title" data-text="V2.0: Prismatic Paint">V2.0: Prismatic Paint</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="splash-bottom-bar">
+        <div class="splash-progress-track">
+          <div id="splash-progress-fill" class="splash-progress-fill"></div>
+        </div>
+        <div id="splash-prompt" class="splash-prompt">🎷 CLICK TO START & PLAY LOFI JAZZ 🎵</div>
+      </div>
+    </div>
+    
+    <header class="hud-panel wide-panel">
+      <div class="hud-left-section">
+        <div class="user-id-badge" id="player-id-hud">ID: --------</div>
+        <div class="currency-display">
+          <span class="currency-icon">💰</span>
+          <span id="cash-amount">$0</span>
+        </div>
+        
+        <div id="og-badge-hud" class="og-badge-hud hidden" title="Permanent OG Multiplier Active!">
+          🏆 OG BADGE <span class="og-mult-tag">ACTIVE</span>
+        </div>
+
+        <div id="rebirth-badge-hud" class="rebirth-badge-hud hidden" title="Active Rebirth Multiplier">
+          ♻️ REBIRTH <span id="rebirth-level-hud">0</span> (<span id="rebirth-mult-hud">1.0×</span>)
+        </div>
+
+        <div id="playtester-badge-hud" class="playtester-badge-hud hidden" title="Playtester Account Mode Active">
+          🧪 PLAYTESTER MODE
+        </div>
+      </div>
+
+      <div class="action-buttons-row">
+        <button id="rebirth-btn" class="btn btn-rebirth">♻️ Rebirth</button>
+        <button id="shovel-btn" class="btn btn-shovel">⛏️ Shovel</button>
+        <button id="decor-btn" class="btn btn-decor">🪵 Decor Shop</button>
+        <button id="sell-btn" class="btn btn-sell">🤠 Sell</button>
+        <button id="shop-btn" class="btn btn-shop">🛒 Shop</button>
+        <button id="settings-btn" class="btn btn-settings">⚙️ Settings</button>
+      </div>
+    </header>
+
+    <section class="status-nav-banner wide-panel" id="status-nav-banner">
+      <div id="status-banner" class="weather-click-area" title="Click for Weather Info!">
+        <div class="sky-arc-container" id="weather-icon-container">
+          <span id="cycle-icon" class="celestial-icon">☀️</span>
+          <div id="holo-raindrop-icon" class="holo-raindrop-icon hidden">
+            <div class="raindrop-sheen"></div>
+          </div>
+        </div>
+        <div class="cycle-info">
+          <div class="cycle-label-row">
+            <span id="cycle-label">Day Time</span>
+            <span id="admin-weather-tag" class="admin-weather-tag hidden">⚡ ADMIN TRIGGERED</span>
+          </div>
+          <span id="cycle-timer">5:00</span>
+        </div>
+      </div>
+    </section>
+
+    <main class="farm-yard-container">
+      <div class="bg-trees-layer">
+        <div class="tree-group tg1">🌲</div>
+        <div class="tree-group tg2">🌳</div>
+        <div class="tree-group tg3">🌲</div>
+        <div class="tree-group tg4">🌲</div>
+        <div class="tree-group tg5">🌳</div>
+        <div class="tree-group tg6">🌲</div>
+        <div class="tree-group tg7">🌳</div>
+        <div class="tree-group tg8">🌲</div>
+      </div>
+
+      <div id="prismatic-globs-layer" class="prismatic-globs-layer hidden"></div>
+
+      <div id="fireflies-layer" class="fireflies-layer">
+        <div class="firefly ff1"></div>
+        <div class="firefly ff2"></div>
+        <div class="firefly ff3"></div>
+        <div class="firefly ff4"></div>
+        <div class="firefly ff5"></div>
+        <div class="firefly ff6"></div>
+        <div class="firefly ff7"></div>
+        <div class="firefly ff8"></div>
+      </div>
+
+      <div id="prismatic-rain-layer" class="prismatic-rain-layer hidden"></div>
+
+      <div class="swaying-grass-layer">
+        <div class="grass-patch p1"><div class="blade b1"></div><div class="blade b2"></div><div class="blade b3"></div></div>
+        <div class="grass-patch p2"><div class="blade b2"></div><div class="blade b1"></div><div class="blade b3"></div></div>
+        <div class="grass-patch p3"><div class="blade b3"></div><div class="blade b2"></div><div class="blade b1"></div></div>
+        <div class="grass-patch p4"><div class="blade b1"></div><div class="blade b3"></div><div class="blade b2"></div></div>
+        <div class="grass-patch p5"><div class="blade b2"></div><div class="blade b1"></div><div class="blade b3"></div></div>
+        <div class="grass-patch p6"><div class="blade b1"></div><div class="blade b3"></div><div class="blade b2"></div></div>
+        <div class="grass-patch p7"><div class="blade b3"></div><div class="blade b2"></div><div class="blade b1"></div></div>
+        <div class="grass-patch p8"><div class="blade b1"></div><div class="blade b3"></div><div class="blade b2"></div></div>
+        <div class="flower f1"></div><div class="flower f2"></div><div class="flower f3"></div><div class="flower f4"></div>
+      </div>
+
+      <div class="field-nav-container">
+        <button id="prev-field-btn" class="nav-btn">◀ Prev</button>
+        <div class="field-title-group">
+          <div class="field-title" id="field-title">Field 1 / 5</div>
+          <div class="level-badge" id="level-display">🌟 Level 1 (0 / 100 XP)</div>
+        </div>
+        <button id="next-field-btn" class="nav-btn">Next ▶</button>
+      </div>
+
+      <div class="wooden-fence-structure" id="fence-structure">
+        <div class="fence-post corner-top-left"><div class="post-cap"></div></div>
+        <div class="fence-post corner-top-right"><div class="post-cap"></div></div>
+        <div class="fence-post corner-bottom-left"><div class="post-cap"></div></div>
+        <div class="fence-post corner-bottom-right"><div class="post-cap"></div></div>
+        <div class="fence-rail rail-top"></div>
+        <div class="fence-rail rail-bottom"></div>
+        <div class="fence-rail rail-left"></div>
+        <div class="fence-rail rail-right"></div>
+
+        <div class="tilled-garden-bed">
+          <div id="field-locked-overlay" class="field-locked-overlay hidden">
+            <div class="lock-icon-huge">🔒</div>
+            <h2 id="locked-field-title">Field Locked</h2>
+            <p id="locked-field-req">Reach Level X to unlock!</p>
+            <button id="btn-unlock-field" class="btn-unlock-field">Unlock Field</button>
+          </div>
+          <div class="grid-container" id="plots-grid"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bottom-action-bar wide-panel">
+      <div class="seed-bag-container">
+        <button id="seed-bag-btn" class="seed-bag-btn">
+          🎒 <span id="current-seed-name">Push Down Seeds Bag</span>
+        </button>
+      </div>
+      <div class="bottom-right-actions">
+        <button class="icon-circle-btn" id="friends-btn" title="Friends & Trade Menu">🤝</button>
+      </div>
+    </footer>
+
+    <div id="particles-layer"></div>
+
+    <div id="rebirth-modal" class="modal hidden" style="z-index: 65;">
+      <div class="modal-content rebirth-card">
+        <div class="rebirth-header">
+          <h2>♻️ Farm Rebirth & Prestige</h2>
+          <p class="rebirth-subtitle">Ascend your farm to earn permanent massive multipliers!</p>
+        </div>
+
+        <div class="drawer-tabs">
+          <button id="tab-rebirth-shrine" class="drawer-tab-btn active">♻️ Rebirth Shrine</button>
+          <button id="tab-rebirth-perks" class="drawer-tab-btn">🏆 Prestige Perks</button>
+        </div>
+
+        <div id="rebirth-shrine-view" class="rebirth-view-panel">
+          <div class="rebirth-current-status-box">
+            <div class="stat-bubble">
+              <span class="bubble-label">Rebirth Rank</span>
+              <span id="rebirth-rank-display" class="bubble-value gold-text">Rank 0</span>
+            </div>
+            <div class="stat-bubble">
+              <span class="bubble-label">Cash Multiplier</span>
+              <span id="rebirth-mult-display" class="bubble-value green-text">1.0×</span>
+            </div>
+          </div>
+
+          <div class="rebirth-requirements-card">
+            <h3>Next Rebirth Requirements</h3>
+            <div class="req-row">
+              <span>🌟 Required Level:</span>
+              <span id="rebirth-req-level" class="req-val">Level 50</span>
+            </div>
+            <div class="rebirth-progress-track">
+              <div id="rebirth-level-bar" class="rebirth-progress-fill" style="width: 0%;"></div>
+            </div>
+
+            <div class="req-row margin-top-8">
+              <span>💰 Required Cash:</span>
+              <span id="rebirth-req-cash" class="req-val">$500,000,000</span>
+            </div>
+            <div class="rebirth-progress-track">
+              <div id="rebirth-cash-bar" class="rebirth-progress-fill gold-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="rebirth-warning-box">
+            ⚠️ <strong>Rebirth Notice:</strong> Rebirthing resets your cash, levels, crops, and fields, but permanently multiplies ALL future cash yields!
+          </div>
+
+          <button id="btn-do-rebirth" class="btn-do-rebirth" disabled>
+            <span class="rebirth-btn-title">♻️ ASCEND TO REBIRTH 1</span>
+            <span id="rebirth-btn-sub" class="rebirth-btn-sub">Requirements Not Met</span>
+          </button>
+        </div>
+
+        <div id="rebirth-perks-view" class="rebirth-view-panel hidden">
+          <div class="perks-list-container">
+            <div class="perk-card">
+              <div class="perk-icon">⚡</div>
+              <div class="perk-info">
+                <h4>Permanent Cash Multiplier</h4>
+                <p>Start at <strong>1.5×</strong> on Rebirth 1 (<strong>2.5×</strong> with OG Badge!), increasing by <strong>+1.0×</strong> each subsequent Rebirth!</p>
+              </div>
+            </div>
+            <div class="perk-card">
+              <div class="perk-icon">🏆</div>
+              <div class="perk-info">
+                <h4>Prestige Prestige Badges</h4>
+                <p>Unlock shimmering Rebirth titles shown across chat, trading, and leaderboards!</p>
+              </div>
+            </div>
+            <div class="perk-card">
+              <div class="perk-icon">🌱</div>
+              <div class="perk-info">
+                <h4>Preserved Legacy</h4>
+                <p>All discovered Plant Codex entries, exclusive OG Seeds, and Decor Fence Skins are <strong>never lost</strong> upon Rebirthing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="close-rebirth-btn" class="btn btn-close-modal margin-top-10">Close Rebirth Shrine</button>
+      </div>
+    </div>
+
+    <div id="friends-modal" class="modal hidden" style="z-index: 70;">
+      <div class="modal-content info-card max-600">
+        <h2>🤝 Trade Network</h2>
+        
+        <div class="drawer-tabs">
+          <button id="tab-public-trade" class="drawer-tab-btn active">🌍 Public List</button>
+          <button id="tab-private-trade" class="drawer-tab-btn">🔒 Private ID</button>
+          <button id="tab-global-chat" class="drawer-tab-btn">💬 Global Chat</button>
+        </div>
+
+        <div id="public-trade-view" class="info-body-text text-center-pad">
+          <p id="network-status-text" class="status-offline-text">Network Status: Offline 🔴</p>
+          <div id="active-players-list" class="scroll-list-box">
+            <p class="loading-text">Loading players...</p>
+          </div>
+        </div>
+
+        <div id="private-trade-view" class="info-body-text hidden text-center-pad">
+          <p class="modal-section-title">Direct Trade Request</p>
+          <p class="modal-sub-text">Enter a friend's exact Player ID to send them a private trade invite!</p>
+          <div class="flex-row-gap">
+            <input type="text" id="private-trade-id-input" placeholder="Enter 8-Digit ID" class="admin-input input-id-style">
+            <button id="btn-send-private-trade" class="btn btn-sell-all-bag purple-shadow-btn">Send 📩</button>
+          </div>
+        </div>
+
+        <div id="global-chat-view" class="info-body-text hidden flex-col-pad">
+          <div id="chat-messages-container" class="chat-container">
+            <p class="chat-welcome-text">Welcome to Global Chat!</p>
+          </div>
+          <div class="flex-row-gap">
+            <input type="text" id="chat-input" class="admin-input flex-1" placeholder="Say hi...">
+            <button id="btn-send-chat" class="btn btn-sell">Send</button>
+          </div>
+        </div>
+
+        <button id="close-friends-btn" class="btn btn-close-modal indigo-btn">Close Network Panel</button>
+      </div>
+    </div>
+
+    <div id="trade-request-modal" class="modal hidden" style="z-index: 105;">
+      <div class="modal-content info-card max-350-center">
+        <h2 style="color: #f57c00;">📩 Trade Request!</h2>
+        <p class="trade-request-text">Player <strong id="trade-request-id" class="trade-id-highlight">12345678</strong> wants to trade!</p>
+        <div class="flex-row-gap">
+          <button id="btn-accept-trade" class="btn btn-sell-all-bag green-shadow-btn">Accept</button>
+          <button id="btn-decline-trade" class="btn btn-close-modal margin-0">Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="trade-session-modal" class="modal hidden" style="z-index: 80;">
+      <div class="modal-content trade-session-box">
+        <div class="trade-session-header">
+           <h2>🤝 Trading Session</h2>
+           <div id="trade-status-indicator" class="status-picking">Picking Items...</div>
+        </div>
+        
+        <div class="trade-split-view">
+          <div class="trade-side my-side">
+            <h3 class="side-title green-side">Your Offer (Max 9)</h3>
+            <div class="trade-slots-grid" id="my-trade-slots"></div>
+            <button id="btn-open-backpack" class="btn-backpack-action">🎒 + Add Items From Bag</button>
+          </div>
+          
+          <div class="trade-side their-side">
+            <h3 class="side-title red-side" id="trade-partner-title">Partner Offer</h3>
+            <div class="trade-slots-grid" id="their-trade-slots"></div>
+            <div id="their-trade-status" class="partner-status-waiting">Waiting for partner...</div>
+          </div>
+        </div>
+
+        <div class="trade-actions-row">
+          <button id="btn-trade-ready" class="btn-trade-action-ready">Ready to Trade ✅</button>
+          <button id="btn-trade-cancel" class="btn-trade-action-decline">Cancel / Decline ❌</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="trade-backpack-modal" class="modal hidden" style="z-index: 90;">
+      <div class="modal-content info-card">
+        <h2 style="color: #0288d1;">🎒 Choose Item to Offer</h2>
+        <div class="drawer-tabs">
+          <button id="trade-tab-seeds" class="drawer-tab-btn active">🌱 Seeds</button>
+          <button id="trade-tab-produce" class="drawer-tab-btn">🧺 Produce</button>
+        </div>
+        <div id="trade-picker-list" class="shop-manifest-list max-50vh"></div>
+        <button id="btn-close-trade-backpack" class="btn btn-close-modal margin-top-8">Back to Trade</button>
+      </div>
+    </div>
+    
+    <div id="skip-timer-modal" class="modal hidden" style="z-index: 60;">
+      <div class="modal-content skip-modal-box">
+        <div class="skip-header-icon">⏳</div>
+        <h2>Fast-Forward Time</h2>
+        <p class="time-skip-subtitle">Instantly mature your growing crop!</p>
+        
+        <div class="skip-stats-container">
+          <div class="skip-stat-card">
+            <span class="skip-stat-title">Remaining Time</span>
+            <span id="skip-time-left" class="skip-stat-value">0s</span>
+          </div>
+        </div>
+
+        <button id="btn-confirm-skip" class="btn-time-skip-art">
+          <span class="skip-btn-main">⏳ SKIP GROWTH</span>
+          <span class="skip-btn-cost">Cost: $0</span>
+        </button>
+        <button id="btn-close-skip" class="btn btn-close-modal margin-top-8">Cancel</button>
+      </div>
+    </div>
+
+    <div id="seed-bag-drawer" class="seed-drawer hidden">
+      <div class="drawer-header">
+        <span>🎒 Seed Bag & Produce</span>
+        <button id="close-drawer-btn" class="close-x">&times;</button>
+      </div>
+      <div class="drawer-tabs">
+        <button id="tab-seeds-btn" class="drawer-tab-btn active">🌱 Seeds</button>
+        <button id="tab-produce-btn" class="drawer-tab-btn">🧺 Harvested</button>
+      </div>
+      <div id="seed-inventory-list" class="seed-inventory-grid"></div>
+      <div id="produce-inventory-list" class="produce-inventory-list hidden"></div>
+    </div>
+
+    <div id="decor-modal" class="modal hidden">
+      <div class="modal-content decor-shop-card">
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2>🪵 DECOR SHOP</h2>
+            <div class="refill-timer-badge">Cycle Restock: <span id="decor-refill-timer">3:00</span></div>
+          </div>
+        </div>
+        
+        <div class="drawer-tabs">
+          <button id="tab-fence-skins-btn" class="drawer-tab-btn active">🪵 Fence Skins</button>
+          <button id="tab-special-skins-btn" class="drawer-tab-btn">🏆 Special Rewards</button>
+        </div>
+
+        <div id="fence-skins-list" class="fence-skins-grid"></div>
+
+        <div id="special-skins-list" class="shop-manifest-list hidden">
+          <div class="shop-item-card">
+            <div class="item-info">
+              <div class="item-title">✨ Artistic Promise</div>
+              <span class="rarity-tag rarity-transcendent">Index Master</span>
+              <div class="item-price-stock purple-text">Reward: 100% Plant Codex Completion (Standard + Event)</div>
+            </div>
+            <button id="articular-skin-toggle-btn" class="btn-buy articular-skin-btn">Check Codex</button>
+          </div>
+        </div>
+
+        <button id="close-decor-btn" class="btn btn-close-modal margin-top-8">Close Decor Shop</button>
+      </div>
+    </div>
+
+    <div id="weather-modal" class="modal hidden">
+      <div class="modal-content info-card">
+        <h2 id="weather-modal-title">☀️ Weather Info</h2>
+        <div class="info-body-text" id="weather-modal-body"></div>
+        <button id="close-weather-btn" class="btn btn-close-modal margin-top-10">Got It! 🌤️</button>
+      </div>
+    </div>
+
+    <div id="sell-modal" class="modal hidden">
+      <div class="modal-content sell-card">
+        <h2 id="sell-modal-title">🤠 Harvest Market</h2>
+        <p class="codex-subtitle">Sell crops for cash!</p>
+        
+        <div id="sell-main-options" class="sell-options-container">
+          <button id="btn-sell-all-modal" class="btn-sell-option sell-all">
+            <span class="sell-opt-icon">🤠</span>
+            <div class="sell-opt-text">
+              <span class="opt-title">Sell All Produce</span>
+              <span id="sell-all-payout-text" class="opt-subtitle">Total Value: $0</span>
+            </div>
+          </button>
+          <button id="btn-sell-select-modal" class="btn-sell-option sell-select">
+            <span class="sell-opt-icon">🧺</span>
+            <div class="sell-opt-text">
+              <span class="opt-title">Choose Item</span>
+              <span class="opt-subtitle">Select quantity</span>
+            </div>
+          </button>
+          <button id="btn-sell-bargain-modal" class="btn-sell-option sell-bargain">
+            <span class="sell-opt-icon">🧙‍♂️</span>
+            <div class="sell-opt-text">
+              <span class="opt-title">BARGAIN</span>
+              <span class="opt-subtitle">Talk to Bargarnier</span>
+            </div>
+          </button>
+        </div>
+
+        <div id="sell-item-picker" class="sell-picker-grid hidden"></div>
+
+        <div id="sell-quantity-picker" class="sell-quantity-box hidden">
+          <div id="qty-crop-header" class="qty-crop-header"></div>
+          <div class="stepper-row">
+            <button id="qty-minus-btn" class="btn-stepper">-</button>
+            <span id="qty-display-num" class="qty-number">1</span>
+            <button id="qty-plus-btn" class="btn-stepper">+</button>
+          </div>
+          <div id="qty-payout-preview" class="qty-payout-preview">Payout: $0</div>
+          <button id="qty-confirm-sell-btn" class="btn-sell-all-bag margin-top-6">Confirm Sale 💰</button>
+          <button id="qty-back-btn" class="btn-close-modal back-btn-style">Back to Item List</button>
+        </div>
+
+        <div id="bargain-npc-box" class="npc-box hidden">
+          <div class="npc-avatar">🧙‍♂️</div>
+          <div class="npc-title" id="npc-name-header">Merchant Bargarnier</div>
+          <div id="npc-dialogue-text" class="npc-speech-bubble">"Greetings traveler! I can appraise your Seed Bag for market premiums."</div>
+          <div class="bargain-fee-badge" id="npc-bargain-fee">Fee: $0</div>
+          
+          <div class="cash-compare-container">
+            <div class="cash-stat-box">
+              <span class="stat-label">Value</span>
+              <span id="npc-standard-value" class="stat-value">$0</span>
+            </div>
+            <div class="cash-stat-box highlight-box">
+              <span class="stat-label">Payout</span>
+              <span id="npc-projected-cash" class="stat-value-green">$0</span>
+            </div>
+          </div>
+          
+          <div id="npc-offer-tier" class="npc-offer-tier hidden">Offer: Standard</div>
+          
+          <button id="btn-start-bargain" class="bargain-start-btn">Pay Fee & Appraise 🤝</button>
+          
+          <div id="daily-deal-wrapper" class="daily-deal-wrapper hidden">
+            <button id="btn-daily-deal" class="btn-daily-deal-art">
+              <span class="daily-deal-main-title">🔥 20X DAILY DEAL! 🔥</span>
+              <span id="daily-deal-countdown-text" class="daily-deal-timer-sub">Apply Massive 20× Boost!</span>
+            </button>
+          </div>
+
+          <button id="btn-accept-bargain" class="bargain-accept-btn hidden">Accept & Sell 💰</button>
+          <button id="btn-decline-bargain" class="bargain-decline-btn hidden">Decline Deal 🙅‍♂️</button>
+          <button id="btn-bargain-back" class="back-bargain-btn">Back</button>
+        </div>
+        <button id="close-sell-btn" class="btn btn-close-modal margin-top-8">Close Market</button>
+      </div>
+    </div>
+
+    <div id="shop-modal" class="modal hidden">
+      <div class="modal-content shop-manifest-card">
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2>SHOP</h2>
+            <div class="refill-timer-badge">Refill: <span id="shop-refill-timer">3:00</span></div>
+          </div>
+          <button id="open-index-btn" class="btn btn-index">📖 Index</button>
+        </div>
+
+        <div class="drawer-tabs">
+          <button id="shop-tab-normal" class="drawer-tab-btn active">🌱 Normal Catalog</button>
+          <button id="shop-tab-event" class="drawer-tab-btn event-shop-tab-btn hidden">🎨 Prismatic Paint Event Shop</button>
+        </div>
+
+        <div id="event-shop-banner" class="event-shop-banner hidden">
+          <div class="event-banner-content">
+            <span class="event-banner-badge">✨ EVENT ACTIVE</span>
+            <span class="event-banner-desc">Prismatic Paint Rain is falling! Exclusive Event Seeds in stock!</span>
+          </div>
+        </div>
+
+        <div id="shop-items-list" class="shop-manifest-list"></div>
+        <div id="event-shop-items-list" class="shop-manifest-list hidden"></div>
+
+        <button id="close-shop-btn" class="btn btn-close-modal">Close Shop</button>
+      </div>
+    </div>
+
+    <div id="vine-modal" class="modal hidden" style="z-index: 40;">
+      <div class="modal-content vine-card">
+        <div class="vine-modal-header">
+          <h2 id="vine-modal-title">🌿 Holofern</h2>
+          <p class="codex-subtitle">Harvest individual fronds!</p>
+        </div>
+        
+        <div id="vine-produce-list" class="vine-produce-grid"></div>
+        
+        <div class="vine-footer-actions">
+          <button id="harvest-all-vine-btn" class="btn btn-harvest-all-vine">🤠 Harvest All</button>
+          <button id="skip-all-vine-btn" class="btn btn-skip-all-vine">⏳ Skip All</button>
+        </div>
+        
+        <button id="close-vine-btn" class="btn btn-close-modal">Close Vine Menu</button>
+      </div>
+    </div>
+
+    <div id="index-modal" class="modal hidden" style="z-index: 50;">
+      <div class="modal-content codex-card">
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2>📖 Plant Codex Index</h2>
+          </div>
+          <button id="close-index-btn" class="close-x">&times;</button>
+        </div>
+
+        <p class="codex-subtitle">Discover and harvest all crops to complete your Codex!</p>
+
+        <div class="codex-progress-bar-container">
+          <div class="codex-progress-fill" id="codex-progress-fill" style="width: 0%;"></div>
+          <span class="codex-progress-text" id="codex-progress-text">0 / 16 Discovered</span>
+        </div>
+
+        <div id="index-items-list" class="codex-grid"></div>
+
+        <div class="index-skin-reward-banner">
+          🏆 COMPLETE 100% OF CODEX FOR THE EXCLUSIVE <strong>"ARTISTIC PROMISE"</strong> FENCE SKIN! (OG NOT REQUIRED)
+        </div>
+
+        <button id="close-index-bottom-btn" class="btn btn-close-modal margin-top-8">Close Index</button>
+      </div>
+    </div>
+
+    <div id="permanent-info-modal" class="modal hidden" style="z-index: 95;">
+      <div class="modal-content info-card max-400-center">
+        <h2 style="color: #e53935;"><span class="permanent-red-p-badge" style="margin-right: 6px;">P</span> Permanent Vine Crop</h2>
+        <p class="info-body-text" style="text-align: center; margin: 12px 0;">
+          Plants marked with <strong>(P)</strong> are permanent multi-harvest vines! Once fully established, they stay rooted and continuously produce harvestable clusters/fruits.
+        </p>
+        <button id="close-perm-info-btn" class="btn btn-close-modal">Understood!</button>
+      </div>
+    </div>
+
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content settings-card">
+        <h2>⚙️ Garden Settings</h2>
+        <div class="stats-summary" id="stats-summary"></div>
+        
+        <button id="btn-open-playtester-menu" class="btn btn-playtester margin-bottom-8">🧪 Playtester Accounts</button>
+
+        <div class="legacy-verification-box">
+          <p style="font-weight:900; font-size:14px; color:#4e342e; margin-bottom:4px;">🏆 Garden Venture 1 Status</p>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="gv1-verify-code" placeholder="GV1 Veteran Code" class="admin-input flex-1">
+            <button id="btn-verify-gv1" class="btn btn-sell" style="padding:6px 14px; font-size:13px;">Verify</button>
+          </div>
+        </div>
+
+        <button id="btn-open-admin-auth" class="btn btn-settings" style="background:#3949ab; margin-top:8px;">🛡️ Admin Panel</button>
+        <button id="btn-open-reset-confirm" class="btn btn-danger">⚠️ Reset Save Data</button>
+        <button id="close-settings-btn" class="btn btn-close-modal margin-top-8">Close Settings</button>
+      </div>
+    </div>
+
+    <div id="playtester-modal" class="modal hidden" style="z-index: 102;">
+      <div class="modal-content info-card max-500">
+        <h2 style="color: #00b0ff;">🧪 Playtester Accounts</h2>
+        <p class="modal-sub-text margin-bottom-8">Separate temporary environment for testing mechanics without touching your main account.</p>
+        
+        <div class="playtester-status-panel">
+          <span class="status-label">Active State:</span>
+          <span id="playtester-mode-status" class="status-value font-bold">Main Account Active 🏠</span>
+        </div>
+
+        <div class="playtester-actions-box">
+          <button id="btn-toggle-playtester-mode" class="btn btn-playtester-action">🧪 Enter Playtester Mode</button>
+          <button id="btn-reset-playtester" class="btn btn-playtester-reset">♻️ Reset Playtester Account</button>
+          <button id="btn-delete-playtester" class="btn btn-playtester-delete">🗑️ Delete Playtester Account</button>
+        </div>
+
+        <button id="close-playtester-btn" class="btn btn-close-modal margin-top-8">Back to Settings</button>
+      </div>
+    </div>
+
+    <div id="playtester-confirm-modal" class="modal hidden" style="z-index: 110;">
+      <div class="modal-content info-card max-350-center">
+        <h2 id="playtester-confirm-title" style="color: #d32f2f;">⚠️ CONFIRM ACTION</h2>
+        <p id="playtester-confirm-desc" class="wipe-warning-text">Are you sure?</p>
+        <div class="flex-row-gap">
+          <button id="btn-confirm-playtester-action" class="btn btn-sell-all-bag red-wipe-btn">YES, PROCEED</button>
+          <button id="btn-cancel-playtester-action" class="btn btn-close-modal cancel-wipe-btn">CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="admin-login-modal" class="modal hidden" style="z-index: 105;">
+      <div class="modal-content info-card max-350-center">
+        <h2 style="color: #d32f2f;">🛡️ Admin Auth</h2>
+        <input type="password" id="admin-pass-1" placeholder="Code 1" class="admin-input margin-bottom-8 text-center">
+        <input type="password" id="admin-pass-2" placeholder="Code 2" class="admin-input margin-bottom-12 text-center">
+        <div class="flex-row-gap">
+          <button id="btn-submit-admin" class="btn btn-sell-all-bag red-login-btn">Login</button>
+          <button id="btn-close-admin-login" class="btn btn-close-modal margin-0 flex-1">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="admin-modal" class="modal hidden" style="z-index: 100;">
+      <div class="modal-content info-card admin-panel-card">
+        <h2 style="color: #d32f2f;">🛡️ Admin Command Suite</h2>
+        
+        <div class="admin-module admin-scope-module">
+          <p class="admin-module-title">🌍 Command Target & Scope</p>
+          <select id="admin-target-scope" class="admin-input bg-white">
+            <option value="local">Local (Me Only)</option>
+            <option value="global">Global (Everyone on Server)</option>
+          </select>
+        </div>
+
+        <div class="admin-module" style="background:#f3e5f5; border-color:#ba68c8;">
+          <p class="admin-module-title">🍀 Trigger Restock Luck</p>
+          <div class="admin-input-row">
+            <select id="admin-luck-select" class="admin-input flex-2">
+              <option value="2">2X Restock Luck</option>
+              <option value="4">4X Restock Luck</option>
+              <option value="8">8X Restock Luck</option>
+              <option value="12">12X Restock Luck</option>
+              <option value="50">50X Restock Luck</option>
+              <option value="100">100X Restock Luck (Guaranteed Transcendent)</option>
+            </select>
+            <button id="admin-btn-trigger-luck" class="btn admin-btn-action" style="background:#8e24aa; flex:1;">Apply Luck</button>
+          </div>
+        </div>
+
+        <div class="admin-module" style="background:#e0f7fa; border-color:#00bcd4;">
+          <p class="admin-module-title">🌧️ Prismatic Weather Override</p>
+          <button id="admin-btn-toggle-weather" class="btn admin-btn-action weather-override-btn">Toggle Prismatic Rain (ON/OFF)</button>
+        </div>
+
+        <div class="admin-module">
+          <p class="admin-module-title">🌱 Give Seeds to Player</p>
+          <div class="admin-input-row">
+            <select id="admin-seed-select" class="admin-input flex-2"></select>
+            <input type="number" id="admin-seed-qty" value="5" min="1" class="admin-input flex-1">
+          </div>
+          <button id="admin-btn-grant" class="btn admin-btn-action grant-seed-btn">Grant Selected Seed</button>
+        </div>
+
+        <div class="admin-module" style="background:#fff8e1; border-color:#ffa000;">
+          <p class="admin-module-title">🏆 Give OG Seed (VentureBloom)</p>
+          <div class="admin-input-row">
+            <input type="number" id="admin-og-seed-qty" value="1" min="1" class="admin-input flex-1">
+            <button id="admin-btn-grant-og" class="btn admin-btn-action" style="background:#f57f17; flex:2;">Grant VentureBloom (OG)</button>
+          </div>
+        </div>
+
+        <div class="admin-module">
+          <p class="admin-module-title">🛒 Restock Specific Shop Seed</p>
+          <div class="admin-input-row">
+            <select id="admin-restock-select" class="admin-input flex-2"></select>
+            <input type="number" id="admin-restock-qty" value="5" min="1" class="admin-input flex-1">
+          </div>
+          <button id="admin-btn-restock" class="btn admin-btn-action restock-btn">Update & Restock Seed Stock</button>
+        </div>
+
+        <div class="admin-module" style="background:#e8f5e9; border-color:#81c784;">
+          <p class="admin-module-title">💰 Grant Instant Cash</p>
+          <div class="admin-input-row">
+            <input type="number" id="admin-cash-qty" value="1000000" min="1" class="admin-input flex-2">
+            <button id="admin-btn-grant-cash" class="btn admin-btn-action" style="background:#2e7d32; flex:1;">Add Cash</button>
+          </div>
+        </div>
+
+        <div class="admin-module" style="background:#fff3e0; border-color:#ffb74d;">
+          <p class="admin-module-title">⏳ Fast-Forward Farm Crops</p>
+          <button id="admin-btn-skip-grow" class="btn admin-btn-action" style="background:#ef6c00;">Instantly Mature All Crops</button>
+        </div>
+
+        <div class="admin-module">
+          <p class="admin-module-title">📢 Broadcast Server Announcement</p>
+          <div class="admin-input-row">
+            <input type="text" id="admin-broadcast-msg" placeholder="Server Alert Message..." class="admin-input flex-2">
+            <button id="admin-btn-broadcast" class="btn admin-btn-action" style="background:#3949ab; flex:1;">Send Alert</button>
+          </div>
+        </div>
+
+        <button id="btn-close-admin-suite" class="btn btn-close-modal margin-top-8">Close Admin Suite</button>
+      </div>
+    </div>
+
+    <div id="reset-confirm-modal" class="modal hidden" style="z-index: 120;">
+      <div class="modal-content info-card max-350-center">
+        <h2 style="color: #d32f2f;">⚠️ RESET EVERYTHING</h2>
+        <p class="wipe-warning-text">This will permanently delete all farm progress, coins, inventory, and codex! Are you sure?</p>
+        <div class="flex-row-gap margin-top-10">
+          <button id="btn-confirm-reset" class="btn btn-sell-all-bag red-wipe-btn">WIPE ALL</button>
+          <button id="btn-cancel-reset" class="btn btn-close-modal cancel-wipe-btn">CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
