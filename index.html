@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Garden Venture 2: Prismatic Paint</title>
+  <title>Garden Venture 2: V3.0 Fusion</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2.3">
+  <link rel="stylesheet" href="style.css?v=3.1">
   <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database-compat.js"></script>
 </head>
@@ -15,51 +15,21 @@
 
   <div id="game-container">
 
+    <!-- FLOATING TOAST NOTIFICATIONS CONTAINER -->
     <div id="toast-container" class="toast-container"></div>
 
+    <!-- SPLASH & TITLE SCREEN -->
     <div id="splash-screen" class="splash-screen">
-      <div class="paint-splatter-bg">
-        <svg class="paint-splatter-svg splat-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="cyanPaintGrad" cx="40%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#80f7ff" />
-              <stop offset="45%" stop-color="#00e5ff" />
-              <stop offset="85%" stop-color="#0097a7" />
-              <stop offset="100%" stop-color="#006064" />
-            </radialGradient>
-          </defs>
-          <path fill="url(#cyanPaintGrad)" d="M95,45 C115,20 135,15 130,42 C148,32 170,48 152,65 C175,75 178,102 154,108 C172,128 155,152 135,140 C125,162 98,170 90,148 C72,168 45,150 58,130 C32,135 22,112 42,98 C18,85 28,58 52,68 C48,42 75,32 95,45 Z" />
-          <circle cx="175" cy="40" r="5" fill="#00e5ff" />
-          <circle cx="188" cy="48" r="2.5" fill="#80f7ff" />
-          <circle cx="180" cy="120" r="4.5" fill="#00e5ff" />
+      <div class="electric-accents-bg">
+        <!-- V3.0 Simple Fusion/Electric Accents -->
+        <svg class="lightning-svg bolt-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#ffd54f" d="M55 0 L15 55 L45 55 L35 100 L95 40 L55 40 Z"/>
         </svg>
-
-        <svg class="paint-splatter-svg splat-top-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="magentaPaintGrad" cx="35%" cy="35%" r="65%">
-              <stop offset="0%" stop-color="#ff80ab" />
-              <stop offset="45%" stop-color="#ff4081" />
-              <stop offset="85%" stop-color="#c2185b" />
-              <stop offset="100%" stop-color="#880e4f" />
-            </radialGradient>
-          </defs>
-          <path fill="url(#magentaPaintGrad)" d="M102,52 C128,25 150,38 140,62 C168,58 175,85 158,102 C178,120 162,150 138,138 C135,165 105,172 94,150 C78,168 50,158 58,135 C30,138 25,110 48,95 C22,78 40,50 65,65 C68,38 92,35 102,52 Z" />
-          <circle cx="178" cy="65" r="5.5" fill="#ff4081" />
-          <circle cx="170" cy="155" r="6" fill="#ff4081" />
+        <svg class="lightning-svg bolt-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#00e5ff" d="M50 0 L10 60 L45 60 L30 100 L90 40 L50 40 Z"/>
         </svg>
-
-        <svg class="paint-splatter-svg splat-bottom-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="yellowPaintGrad" cx="40%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#ffff8d" />
-              <stop offset="50%" stop-color="#ffd600" />
-              <stop offset="85%" stop-color="#ffab00" />
-              <stop offset="100%" stop-color="#ff6f00" />
-            </radialGradient>
-          </defs>
-          <path fill="url(#yellowPaintGrad)" d="M100,50 C125,30 145,45 138,70 C165,72 170,100 148,118 C168,142 142,165 120,152 C110,178 80,175 75,150 C52,165 35,142 50,122 C22,118 25,88 48,80 C32,58 60,40 78,58 C85,32 108,35 100,50 Z" />
-          <circle cx="178" cy="108" r="5" fill="#ffd600" />
-          <circle cx="20" cy="138" r="5.5" fill="#ffd600" />
+        <svg class="lightning-svg bolt-3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#b388ff" d="M45 5 L5 65 L40 65 L25 105 L85 45 L45 45 Z"/>
         </svg>
       </div>
 
@@ -72,7 +42,7 @@
             VENTURE <span class="spiced-two">2</span>
           </div>
           <div class="holofoil-subtitle-wrapper">
-            <h1 class="holofoil-title" data-text="V2.0: Prismatic Paint">V2.0: Prismatic Paint</h1>
+            <h1 class="holofoil-title" data-text="V3.0: FUSION">V3.0: FUSION</h1>
           </div>
         </div>
       </div>
@@ -85,6 +55,7 @@
       </div>
     </div>
     
+    <!-- TOP HUD PANEL -->
     <header class="hud-panel wide-panel">
       <div class="hud-left-section">
         <div class="user-id-badge" id="player-id-hud">ID: --------</div>
@@ -102,20 +73,25 @@
         </div>
 
         <div id="playtester-badge-hud" class="playtester-badge-hud hidden" title="Playtester Account Mode Active">
-          🧪 PLAYTESTER MODE
+          🧪 PLAYTESTER
+        </div>
+
+        <div id="fusion-token-hud" class="fusion-token-hud" title="Fusion Tokens Available to Skip Timers">
+          🪙 <span id="token-count-display">0</span>
         </div>
       </div>
 
       <div class="action-buttons-row">
         <button id="rebirth-btn" class="btn btn-rebirth">♻️ Rebirth</button>
         <button id="shovel-btn" class="btn btn-shovel">⛏️ Shovel</button>
-        <button id="decor-btn" class="btn btn-decor">🪵 Decor Shop</button>
+        <button id="decor-btn" class="btn btn-decor">🪵 Decor</button>
         <button id="sell-btn" class="btn btn-sell">🤠 Sell</button>
         <button id="shop-btn" class="btn btn-shop">🛒 Shop</button>
         <button id="settings-btn" class="btn btn-settings">⚙️ Settings</button>
       </div>
     </header>
 
+    <!-- STATUS & WEATHER BANNER -->
     <section class="status-nav-banner wide-panel" id="status-nav-banner">
       <div id="status-banner" class="weather-click-area" title="Click for Weather Info!">
         <div class="sky-arc-container" id="weather-icon-container">
@@ -132,8 +108,15 @@
           <span id="cycle-timer">5:00</span>
         </div>
       </div>
+
+      <!-- Compact Quick Status for Active Fusion -->
+      <div id="fusion-quick-indicator" class="fusion-quick-indicator" title="Open Fuse Machine">
+        <span class="fusion-pulse-dot"></span>
+        <span id="fusion-quick-text">🎰 Machine Idle</span>
+      </div>
     </section>
 
+    <!-- MAIN FARM DISPLAY AREA -->
     <main class="farm-yard-container">
       <div class="bg-trees-layer">
         <div class="tree-group tg1">🌲</div>
@@ -173,6 +156,7 @@
         <div class="flower f1"></div><div class="flower f2"></div><div class="flower f3"></div><div class="flower f4"></div>
       </div>
 
+      <!-- FIELD PAGINATION CONTROLS -->
       <div class="field-nav-container">
         <button id="prev-field-btn" class="nav-btn">◀ Prev</button>
         <div class="field-title-group">
@@ -182,6 +166,7 @@
         <button id="next-field-btn" class="nav-btn">Next ▶</button>
       </div>
 
+      <!-- GARDEN PLOTS FENCE STRUCTURE -->
       <div class="wooden-fence-structure" id="fence-structure">
         <div class="fence-post corner-top-left"><div class="post-cap"></div></div>
         <div class="fence-post corner-top-right"><div class="post-cap"></div></div>
@@ -204,19 +189,223 @@
       </div>
     </main>
 
+    <!-- BOTTOM ACTION BAR -->
     <footer class="bottom-action-bar wide-panel">
+      <!-- LOWER-LEFT UI BUTTONS FOR TRADE, DAILY REWARDS & FUSE MACHINE -->
+      <div class="bottom-left-actions">
+        <button class="icon-circle-btn" id="friends-btn" title="Trade Network & Friends">🤝</button>
+        
+        <button class="icon-nav-btn btn-fuse-machine" id="btn-open-fuse-machine" title="Fuse Machine">
+          <span class="nav-btn-icon">🎰</span>
+          <span class="nav-btn-label">Fuse</span>
+          <span class="notification-indicator-dot hidden" id="fuse-notification-dot"></span>
+        </button>
+
+        <button class="icon-nav-btn btn-daily-rewards" id="btn-open-daily-rewards" title="Daily Rewards & Streak">
+          <span class="nav-btn-icon">📆</span>
+          <span class="nav-btn-label">Daily</span>
+          <span class="notification-indicator-dot hidden" id="daily-notification-dot"></span>
+        </button>
+      </div>
+
+      <!-- SEED BAG SELECTOR -->
       <div class="seed-bag-container">
         <button id="seed-bag-btn" class="seed-bag-btn">
           🎒 <span id="current-seed-name">Push Down Seeds Bag</span>
         </button>
       </div>
-      <div class="bottom-right-actions">
-        <button class="icon-circle-btn" id="friends-btn" title="Friends & Trade Menu">🤝</button>
-      </div>
     </footer>
 
+    <!-- PARTICLES FX LAYER -->
     <div id="particles-layer"></div>
 
+    <!-- ==================== V3.0 🎰 FUSE MACHINE MODAL ==================== -->
+    <div id="fuse-machine-modal" class="modal hidden" style="z-index: 75;">
+      <div class="modal-content fuse-machine-card polished-ui-card">
+        
+        <div class="fuse-machine-header">
+          <div class="fuse-title-group">
+            <h2>🎰 FUSE MACHINE</h2>
+            <p class="fuse-subtitle">Synthesize 4 plants into rare exclusive seeds.</p>
+          </div>
+          <button id="close-fuse-btn" class="close-x">&times;</button>
+        </div>
+
+        <!-- 4 INPUT BOXES -->
+        <div class="fuse-slots-row">
+          <div class="fuse-input-slot" id="fuse-slot-0" data-slot="0" title="Click to select Plant 1">
+            <div class="slot-empty-state">
+              <span class="slot-plus">➕</span>
+              <span class="slot-num">PLANT 1</span>
+            </div>
+          </div>
+          <div class="fuse-input-slot" id="fuse-slot-1" data-slot="1" title="Click to select Plant 2">
+            <div class="slot-empty-state">
+              <span class="slot-plus">➕</span>
+              <span class="slot-num">PLANT 2</span>
+            </div>
+          </div>
+          <div class="fuse-input-slot" id="fuse-slot-2" data-slot="2" title="Click to select Plant 3">
+            <div class="slot-empty-state">
+              <span class="slot-plus">➕</span>
+              <span class="slot-num">PLANT 3</span>
+            </div>
+          </div>
+          <div class="fuse-input-slot" id="fuse-slot-3" data-slot="3" title="Click to select Plant 4">
+            <div class="slot-empty-state">
+              <span class="slot-plus">➕</span>
+              <span class="slot-num">PLANT 4</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FUSION POWER & METRICS -->
+        <div class="fuse-stats-grid">
+          <div class="fuse-stat-box power-stat-box">
+            <span class="stat-caption">⚡ FUSION POWER</span>
+            <span class="stat-digit gold-text" id="fuse-power-val">0</span>
+          </div>
+          <div class="fuse-stat-box holo-stat-box">
+            <span class="stat-caption">🌈 HOLO CHANCE</span>
+            <span class="stat-digit cyan-text" id="fuse-holo-val">0%</span>
+          </div>
+          <div class="fuse-stat-box cost-stat-box">
+            <span class="stat-caption">💰 FUSION COST</span>
+            <span class="stat-digit green-text" id="fuse-cost-val">$0</span>
+          </div>
+        </div>
+
+        <!-- 41+ TRANSCENDENT REQUIREMENT BANNER -->
+        <div id="transcendent-banner" class="transcendent-status-banner locked">
+          ⚠️ 41+ FP required for ☀️ SolarBloom. Current: <strong id="transcendent-fp-count">0</strong>
+        </div>
+
+        <!-- DYNAMIC POSSIBLE RESULTS SECTION -->
+        <div class="possible-results-section">
+          <div class="results-section-header">
+            <span>POSSIBLE RESULTS</span>
+          </div>
+          <div class="results-cards-grid" id="fuse-possible-results-list">
+            <div class="empty-odds-prompt">Insert 4 plants to calculate exact odds.</div>
+          </div>
+        </div>
+
+        <!-- ACTIVE RUNNING TIMER PANEL -->
+        <div id="fuse-running-panel" class="fuse-running-panel hidden">
+          <div class="running-timer-row">
+            <div class="timer-info-col">
+              <span class="timer-label">FUSION IN PROGRESS...</span>
+              <span id="fuse-timer-clock" class="timer-clock">00:00</span>
+            </div>
+          </div>
+          <div class="fuse-timer-bar-track">
+            <div id="fuse-timer-bar-fill" class="fuse-timer-bar-fill"></div>
+          </div>
+          <div class="fuse-timer-btn-row">
+            <button id="btn-use-token-fuse" class="btn btn-use-token">🪙 SKIP TIMER (<span id="btn-token-avail-count">0</span>)</button>
+          </div>
+        </div>
+
+        <!-- FUSION COMPLETE READY PANEL -->
+        <div id="fuse-ready-panel" class="fuse-ready-panel hidden">
+          <div class="ready-banner-header">⚡ FUSION COMPLETE!</div>
+          <div class="ready-reward-preview" id="fuse-completed-item-card"></div>
+          <button id="btn-claim-fuse-reward" class="btn btn-claim-fuse">🎁 COLLECT SEED</button>
+        </div>
+
+        <!-- FUSE ACTION BUTTON & CONTROLS -->
+        <div class="fuse-footer-controls" id="fuse-initial-controls">
+          <button id="btn-clear-fuse-machine" class="btn-clear-fuse">Clear</button>
+          <button id="btn-start-fuse-machine" class="btn btn-start-fuse-art" disabled>
+            <span class="fuse-btn-main">🎰 FUSE</span>
+            <span class="fuse-btn-sub" id="fuse-btn-sub-label">Select 4 Plants</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== V3.0 FUSION PLANT PICKER MODAL ==================== -->
+    <div id="fuse-plant-picker-modal" class="modal hidden" style="z-index: 95;">
+      <div class="modal-content info-card max-600">
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2>🧺 Seed Bag (Slot <span id="picker-target-slot-num">1</span>)</h2>
+          </div>
+          <button id="close-plant-picker-btn" class="close-x">&times;</button>
+        </div>
+        <div id="fuse-plant-picker-list" class="fuse-picker-inventory-grid"></div>
+      </div>
+    </div>
+
+    <!-- ==================== V3.0 📆 DAILY REWARDS MODAL ==================== -->
+    <div id="daily-rewards-modal" class="modal hidden" style="z-index: 85;">
+      <div class="modal-content daily-rewards-card polished-ui-card">
+        
+        <div class="daily-header">
+          <div class="daily-title-row">
+            <h2>📆 DAILY REWARDS</h2>
+            <div class="daily-streak-badge">
+              🔥 <span id="daily-streak-count">0</span> DAY STREAK
+            </div>
+          </div>
+          <button id="close-daily-rewards-btn" class="close-x">&times;</button>
+        </div>
+
+        <!-- 5-DAY REWARD TRACK -->
+        <div class="daily-track-container" id="daily-track-container">
+          <!-- Populated dynamically via JS: Day 1 through Day 5 -->
+        </div>
+
+        <!-- 🔥 STREAK SEED STAR SHOWCASE BANNER -->
+        <div class="streak-seed-star-showcase">
+          <div class="showcase-glow-aura"></div>
+          <div class="showcase-content">
+            <div class="showcase-left-badge">
+              <span class="flame-huge-icon">🔥</span>
+              <span class="rarity-tag rarity-exclusive">EXCLUSIVE</span>
+            </div>
+            <div class="showcase-right-text">
+              <h3 class="showcase-title">🔥 STREAK SEED</h3>
+              <p class="showcase-desc">Reach Day 5 to unlock this exclusive seed!</p>
+              <div class="showcase-progress-indicator">
+                <span id="streak-seed-days-remaining-text">Complete Day 5 to Claim</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TODAY'S FEATURED REWARD SECTION -->
+        <div class="featured-today-panel">
+          <div class="featured-content">
+            <div id="featured-reward-icon" class="featured-icon">🎁</div>
+            <div class="featured-text">
+              <h3 id="featured-reward-title">Day 1 Reward</h3>
+              <p id="featured-reward-desc">Login bonus to expand your garden venture!</p>
+            </div>
+          </div>
+          <button id="btn-claim-daily-reward" class="btn btn-claim-daily">🎁 CLAIM REWARD</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== 🔥 STREAK SEED HARVEST WARNING MODAL ==================== -->
+    <div id="streak-seed-confirm-modal" class="modal hidden" style="z-index: 130;">
+      <div class="modal-content info-card max-400-center streak-warning-card">
+        <div class="warning-icon-streak">🔥⚠️</div>
+        <h2 style="color: #ff3d00;">⚠️ HARVEST STREAK SEED?</h2>
+        <p class="wipe-warning-text" style="color: #4e342e; font-size: 15px; margin: 12px 0;">
+          Harvesting this plant will <strong>reset your Daily Reward streak back to Day 1</strong>.
+        </p>
+        <div class="flex-row-gap margin-top-10">
+          <button id="btn-confirm-streak-harvest" class="btn btn-sell-all-bag red-wipe-btn">HARVEST</button>
+          <button id="btn-cancel-streak-harvest" class="btn btn-close-modal cancel-wipe-btn">CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- REBIRTH MODAL -->
     <div id="rebirth-modal" class="modal hidden" style="z-index: 65;">
       <div class="modal-content rebirth-card">
         <div class="rebirth-header">
@@ -261,7 +450,7 @@
           </div>
 
           <div class="rebirth-warning-box">
-            ⚠️ <strong>Rebirth Notice:</strong> Rebirthing resets your cash, levels, crops, and fields, but permanently multiplies ALL future cash yields!
+            ⚠️ <strong>Rebirth Notice:</strong> Rebirthing resets your cash, levels, crops, and fields, but permanently multiplies ALL future cash yields! Discoveries, Tokens, and Index progress are never lost.
           </div>
 
           <button id="btn-do-rebirth" class="btn-do-rebirth" disabled>
@@ -282,7 +471,7 @@
             <div class="perk-card">
               <div class="perk-icon">🏆</div>
               <div class="perk-info">
-                <h4>Prestige Prestige Badges</h4>
+                <h4>Prestige Badges</h4>
                 <p>Unlock shimmering Rebirth titles shown across chat, trading, and leaderboards!</p>
               </div>
             </div>
@@ -290,7 +479,7 @@
               <div class="perk-icon">🌱</div>
               <div class="perk-info">
                 <h4>Preserved Legacy</h4>
-                <p>All discovered Plant Codex entries, exclusive OG Seeds, and Decor Fence Skins are <strong>never lost</strong> upon Rebirthing.</p>
+                <p>All discovered Standard Codex, Fusion Codex, Holographic Codex entries, and Fence Skins are <strong>never lost</strong> upon Rebirthing.</p>
               </div>
             </div>
           </div>
@@ -300,9 +489,15 @@
       </div>
     </div>
 
+    <!-- FRIENDS & TRADE MODAL -->
     <div id="friends-modal" class="modal hidden" style="z-index: 70;">
       <div class="modal-content info-card max-600">
-        <h2>🤝 Trade Network</h2>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2>🤝 Trade Network</h2>
+          </div>
+          <button id="close-friends-btn" class="close-x">&times;</button>
+        </div>
         
         <div class="drawer-tabs">
           <button id="tab-public-trade" class="drawer-tab-btn active">🌍 Public List</button>
@@ -335,11 +530,10 @@
             <button id="btn-send-chat" class="btn btn-sell">Send</button>
           </div>
         </div>
-
-        <button id="close-friends-btn" class="btn btn-close-modal indigo-btn">Close Network Panel</button>
       </div>
     </div>
 
+    <!-- TRADE REQUEST MODAL -->
     <div id="trade-request-modal" class="modal hidden" style="z-index: 105;">
       <div class="modal-content info-card max-350-center">
         <h2 style="color: #f57c00;">📩 Trade Request!</h2>
@@ -351,6 +545,7 @@
       </div>
     </div>
 
+    <!-- TRADE SESSION MODAL -->
     <div id="trade-session-modal" class="modal hidden" style="z-index: 80;">
       <div class="modal-content trade-session-box">
         <div class="trade-session-header">
@@ -379,18 +574,24 @@
       </div>
     </div>
 
+    <!-- TRADE BACKPACK MODAL -->
     <div id="trade-backpack-modal" class="modal hidden" style="z-index: 90;">
       <div class="modal-content info-card">
-        <h2 style="color: #0288d1;">🎒 Choose Item to Offer</h2>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2 style="color: #0288d1;">🎒 Choose Item to Offer</h2>
+          </div>
+          <button id="btn-close-trade-backpack" class="close-x">&times;</button>
+        </div>
         <div class="drawer-tabs">
           <button id="trade-tab-seeds" class="drawer-tab-btn active">🌱 Seeds</button>
           <button id="trade-tab-produce" class="drawer-tab-btn">🧺 Produce</button>
         </div>
         <div id="trade-picker-list" class="shop-manifest-list max-50vh"></div>
-        <button id="btn-close-trade-backpack" class="btn btn-close-modal margin-top-8">Back to Trade</button>
       </div>
     </div>
     
+    <!-- TIME SKIP MODAL -->
     <div id="skip-timer-modal" class="modal hidden" style="z-index: 60;">
       <div class="modal-content skip-modal-box">
         <div class="skip-header-icon">⏳</div>
@@ -412,6 +613,7 @@
       </div>
     </div>
 
+    <!-- SEED & PRODUCE BAG DRAWER -->
     <div id="seed-bag-drawer" class="seed-drawer hidden">
       <div class="drawer-header">
         <span>🎒 Seed Bag & Produce</span>
@@ -425,6 +627,7 @@
       <div id="produce-inventory-list" class="produce-inventory-list hidden"></div>
     </div>
 
+    <!-- DECOR SHOP MODAL -->
     <div id="decor-modal" class="modal hidden">
       <div class="modal-content decor-shop-card">
         <div class="shop-header-row">
@@ -432,6 +635,7 @@
             <h2>🪵 DECOR SHOP</h2>
             <div class="refill-timer-badge">Cycle Restock: <span id="decor-refill-timer">3:00</span></div>
           </div>
+          <button id="close-decor-btn" class="close-x">&times;</button>
         </div>
         
         <div class="drawer-tabs">
@@ -451,23 +655,31 @@
             <button id="articular-skin-toggle-btn" class="btn-buy articular-skin-btn">Check Codex</button>
           </div>
         </div>
-
-        <button id="close-decor-btn" class="btn btn-close-modal margin-top-8">Close Decor Shop</button>
       </div>
     </div>
 
+    <!-- WEATHER INFO MODAL -->
     <div id="weather-modal" class="modal hidden">
       <div class="modal-content info-card">
-        <h2 id="weather-modal-title">☀️ Weather Info</h2>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2 id="weather-modal-title">☀️ Weather Info</h2>
+          </div>
+          <button id="close-weather-btn" class="close-x">&times;</button>
+        </div>
         <div class="info-body-text" id="weather-modal-body"></div>
-        <button id="close-weather-btn" class="btn btn-close-modal margin-top-10">Got It! 🌤️</button>
       </div>
     </div>
 
+    <!-- SELL MODAL -->
     <div id="sell-modal" class="modal hidden">
       <div class="modal-content sell-card">
-        <h2 id="sell-modal-title">🤠 Harvest Market</h2>
-        <p class="codex-subtitle">Sell crops for cash!</p>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2 id="sell-modal-title">🤠 Harvest Market</h2>
+          </div>
+          <button id="close-sell-btn" class="close-x">&times;</button>
+        </div>
         
         <div id="sell-main-options" class="sell-options-container">
           <button id="btn-sell-all-modal" class="btn-sell-option sell-all">
@@ -539,10 +751,10 @@
           <button id="btn-decline-bargain" class="bargain-decline-btn hidden">Decline Deal 🙅‍♂️</button>
           <button id="btn-bargain-back" class="back-bargain-btn">Back</button>
         </div>
-        <button id="close-sell-btn" class="btn btn-close-modal margin-top-8">Close Market</button>
       </div>
     </div>
 
+    <!-- SEED SHOP MODAL -->
     <div id="shop-modal" class="modal hidden">
       <div class="modal-content shop-manifest-card">
         <div class="shop-header-row">
@@ -550,33 +762,26 @@
             <h2>SHOP</h2>
             <div class="refill-timer-badge">Refill: <span id="shop-refill-timer">3:00</span></div>
           </div>
-          <button id="open-index-btn" class="btn btn-index">📖 Index</button>
+          <button id="close-shop-btn" class="close-x">&times;</button>
         </div>
 
+        <!-- REMOVED OLD PRISMATIC SHOP TAB AS REQUESTED -->
         <div class="drawer-tabs">
-          <button id="shop-tab-normal" class="drawer-tab-btn active">🌱 Normal Catalog</button>
-          <button id="shop-tab-event" class="drawer-tab-btn event-shop-tab-btn hidden">🎨 Prismatic Paint Event Shop</button>
-        </div>
-
-        <div id="event-shop-banner" class="event-shop-banner hidden">
-          <div class="event-banner-content">
-            <span class="event-banner-badge">✨ EVENT ACTIVE</span>
-            <span class="event-banner-desc">Prismatic Paint Rain is falling! Exclusive Event Seeds in stock!</span>
-          </div>
+          <button id="shop-tab-normal" class="drawer-tab-btn active" style="pointer-events: none;">🌱 Standard Catalog</button>
         </div>
 
         <div id="shop-items-list" class="shop-manifest-list"></div>
-        <div id="event-shop-items-list" class="shop-manifest-list hidden"></div>
-
-        <button id="close-shop-btn" class="btn btn-close-modal">Close Shop</button>
       </div>
     </div>
 
+    <!-- VINE MODAL -->
     <div id="vine-modal" class="modal hidden" style="z-index: 40;">
       <div class="modal-content vine-card">
-        <div class="vine-modal-header">
-          <h2 id="vine-modal-title">🌿 Holofern</h2>
-          <p class="codex-subtitle">Harvest individual fronds!</p>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2 id="vine-modal-title">🌿 Vine Produce</h2>
+          </div>
+          <button id="close-vine-btn" class="close-x">&times;</button>
         </div>
         
         <div id="vine-produce-list" class="vine-produce-grid"></div>
@@ -585,21 +790,25 @@
           <button id="harvest-all-vine-btn" class="btn btn-harvest-all-vine">🤠 Harvest All</button>
           <button id="skip-all-vine-btn" class="btn btn-skip-all-vine">⏳ Skip All</button>
         </div>
-        
-        <button id="close-vine-btn" class="btn btn-close-modal">Close Vine Menu</button>
       </div>
     </div>
 
+    <!-- ==================== V3.0 EXPANDED INDEX & CODEX MODAL ==================== -->
     <div id="index-modal" class="modal hidden" style="z-index: 50;">
-      <div class="modal-content codex-card">
+      <div class="modal-content codex-card polished-ui-card">
         <div class="shop-header-row">
           <div class="shop-title-group">
-            <h2>📖 Plant Codex Index</h2>
+            <h2>📖 Plant Codex & Archives</h2>
           </div>
           <button id="close-index-btn" class="close-x">&times;</button>
         </div>
 
-        <p class="codex-subtitle">Discover and harvest all crops to complete your Codex!</p>
+        <!-- 3 CODEX TABS -->
+        <div class="drawer-tabs">
+          <button id="tab-codex-standard" class="drawer-tab-btn active">🌱 Standard</button>
+          <button id="tab-codex-fusion" class="drawer-tab-btn">🧪 Fusion (8)</button>
+          <button id="tab-codex-holo" class="drawer-tab-btn">🌈 Holographic</button>
+        </div>
 
         <div class="codex-progress-bar-container">
           <div class="codex-progress-fill" id="codex-progress-fill" style="width: 0%;"></div>
@@ -609,26 +818,35 @@
         <div id="index-items-list" class="codex-grid"></div>
 
         <div class="index-skin-reward-banner">
-          🏆 COMPLETE 100% OF CODEX FOR THE EXCLUSIVE <strong>"ARTISTIC PROMISE"</strong> FENCE SKIN! (OG NOT REQUIRED)
+          🏆 COMPLETE 100% OF STANDARD & EVENT CODEX FOR THE EXCLUSIVE <strong>"ARTISTIC PROMISE"</strong> FENCE SKIN! (OG & STREAK SEED NOT REQUIRED)
         </div>
-
-        <button id="close-index-bottom-btn" class="btn btn-close-modal margin-top-8">Close Index</button>
       </div>
     </div>
 
+    <!-- PERMANENT INFO MODAL -->
     <div id="permanent-info-modal" class="modal hidden" style="z-index: 95;">
       <div class="modal-content info-card max-400-center">
-        <h2 style="color: #e53935;"><span class="permanent-red-p-badge" style="margin-right: 6px;">P</span> Permanent Vine Crop</h2>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+             <h2 style="color: #e53935;"><span class="permanent-red-p-badge" style="margin-right: 6px;">P</span> Permanent Vine Crop</h2>
+          </div>
+          <button id="close-perm-info-btn" class="close-x">&times;</button>
+        </div>
         <p class="info-body-text" style="text-align: center; margin: 12px 0;">
           Plants marked with <strong>(P)</strong> are permanent multi-harvest vines! Once fully established, they stay rooted and continuously produce harvestable clusters/fruits.
         </p>
-        <button id="close-perm-info-btn" class="btn btn-close-modal">Understood!</button>
       </div>
     </div>
 
+    <!-- SETTINGS MODAL -->
     <div id="settings-modal" class="modal hidden">
       <div class="modal-content settings-card">
-        <h2>⚙️ Garden Settings</h2>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+             <h2>⚙️ Garden Settings</h2>
+          </div>
+          <button id="close-settings-btn" class="close-x">&times;</button>
+        </div>
         <div class="stats-summary" id="stats-summary"></div>
         
         <button id="btn-open-playtester-menu" class="btn btn-playtester margin-bottom-8">🧪 Playtester Accounts</button>
@@ -643,14 +861,18 @@
 
         <button id="btn-open-admin-auth" class="btn btn-settings" style="background:#3949ab; margin-top:8px;">🛡️ Admin Panel</button>
         <button id="btn-open-reset-confirm" class="btn btn-danger">⚠️ Reset Save Data</button>
-        <button id="close-settings-btn" class="btn btn-close-modal margin-top-8">Close Settings</button>
       </div>
     </div>
 
+    <!-- PLAYTESTER MODAL -->
     <div id="playtester-modal" class="modal hidden" style="z-index: 102;">
       <div class="modal-content info-card max-500">
-        <h2 style="color: #00b0ff;">🧪 Playtester Accounts</h2>
-        <p class="modal-sub-text margin-bottom-8">Separate temporary environment for testing mechanics without touching your main account.</p>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2 style="color: #00b0ff;">🧪 Playtester Accounts</h2>
+          </div>
+          <button id="close-playtester-btn" class="close-x">&times;</button>
+        </div>
         
         <div class="playtester-status-panel">
           <span class="status-label">Active State:</span>
@@ -662,11 +884,10 @@
           <button id="btn-reset-playtester" class="btn btn-playtester-reset">♻️ Reset Playtester Account</button>
           <button id="btn-delete-playtester" class="btn btn-playtester-delete">🗑️ Delete Playtester Account</button>
         </div>
-
-        <button id="close-playtester-btn" class="btn btn-close-modal margin-top-8">Back to Settings</button>
       </div>
     </div>
 
+    <!-- PLAYTESTER CONFIRM MODAL -->
     <div id="playtester-confirm-modal" class="modal hidden" style="z-index: 110;">
       <div class="modal-content info-card max-350-center">
         <h2 id="playtester-confirm-title" style="color: #d32f2f;">⚠️ CONFIRM ACTION</h2>
@@ -678,21 +899,32 @@
       </div>
     </div>
 
+    <!-- ADMIN LOGIN MODAL -->
     <div id="admin-login-modal" class="modal hidden" style="z-index: 105;">
       <div class="modal-content info-card max-350-center">
-        <h2 style="color: #d32f2f;">🛡️ Admin Auth</h2>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2 style="color: #d32f2f;">🛡️ Admin Auth</h2>
+          </div>
+          <button id="btn-close-admin-login" class="close-x">&times;</button>
+        </div>
         <input type="password" id="admin-pass-1" placeholder="Code 1" class="admin-input margin-bottom-8 text-center">
         <input type="password" id="admin-pass-2" placeholder="Code 2" class="admin-input margin-bottom-12 text-center">
         <div class="flex-row-gap">
           <button id="btn-submit-admin" class="btn btn-sell-all-bag red-login-btn">Login</button>
-          <button id="btn-close-admin-login" class="btn btn-close-modal margin-0 flex-1">Cancel</button>
         </div>
       </div>
     </div>
 
+    <!-- ADMIN COMMAND SUITE -->
     <div id="admin-modal" class="modal hidden" style="z-index: 100;">
       <div class="modal-content info-card admin-panel-card">
-        <h2 style="color: #d32f2f;">🛡️ Admin Command Suite</h2>
+        <div class="shop-header-row">
+          <div class="shop-title-group">
+            <h2 style="color: #d32f2f;">🛡️ Admin Command Suite</h2>
+          </div>
+          <button id="btn-close-admin-suite" class="close-x">&times;</button>
+        </div>
         
         <div class="admin-module admin-scope-module">
           <p class="admin-module-title">🌍 Command Target & Scope</p>
@@ -739,6 +971,14 @@
           </div>
         </div>
 
+        <div class="admin-module" style="background:#fce4ec; border-color:#f06292;">
+          <p class="admin-module-title">🪙 Grant Fusion Tokens</p>
+          <div class="admin-input-row">
+            <input type="number" id="admin-token-qty" value="3" min="1" class="admin-input flex-1">
+            <button id="admin-btn-grant-tokens" class="btn admin-btn-action" style="background:#d81b60; flex:2;">Add Tokens</button>
+          </div>
+        </div>
+
         <div class="admin-module">
           <p class="admin-module-title">🛒 Restock Specific Shop Seed</p>
           <div class="admin-input-row">
@@ -768,15 +1008,14 @@
             <button id="admin-btn-broadcast" class="btn admin-btn-action" style="background:#3949ab; flex:1;">Send Alert</button>
           </div>
         </div>
-
-        <button id="btn-close-admin-suite" class="btn btn-close-modal margin-top-8">Close Admin Suite</button>
       </div>
     </div>
 
+    <!-- RESET CONFIRMATION MODAL -->
     <div id="reset-confirm-modal" class="modal hidden" style="z-index: 120;">
       <div class="modal-content info-card max-350-center">
         <h2 style="color: #d32f2f;">⚠️ RESET EVERYTHING</h2>
-        <p class="wipe-warning-text">This will permanently delete all farm progress, coins, inventory, and codex! Are you sure?</p>
+        <p class="wipe-warning-text">This will permanently delete all farm progress, coins, inventory, fusion states, and codex discoveries! Are you sure?</p>
         <div class="flex-row-gap margin-top-10">
           <button id="btn-confirm-reset" class="btn btn-sell-all-bag red-wipe-btn">WIPE ALL</button>
           <button id="btn-cancel-reset" class="btn btn-close-modal cancel-wipe-btn">CANCEL</button>
@@ -786,6 +1025,6 @@
 
   </div>
 
-  <script src="game.js"></script>
+  <script src="game.js?v=3.0"></script>
 </body>
 </html>
